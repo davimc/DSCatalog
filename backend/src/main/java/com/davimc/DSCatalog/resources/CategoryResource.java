@@ -15,12 +15,6 @@ public class CategoryResource {
 
     @GetMapping
     public ResponseEntity<List<Category>> findAll() {
-        List<Category> list = new ArrayList<>();
-        list.add(new Category("Informática"));
-        list.add(new Category("Cama e Banho"));
-        list.add(new Category("Escritório"));
-        list.add(new Category("Música"));
-
-        return ResponseEntity.ok().body(list);
+        return null;
     }
 }
