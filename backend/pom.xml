@@ -50,11 +50,7 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
 	</dependencies>
-=======
-    </dependencies>
->>>>>>> e8fac14fa9b50a84d9252d8cd91c3e69ef6eb4a2
 
 	<build>
 		<plugins>
