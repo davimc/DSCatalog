@@ -5,14 +5,12 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name="tb_product")
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,14 +19,14 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
-    @ManyToMany
-            @JoinTable(joinColumns = @JoinColumn(name="product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    Set<Category> categories = new HashSet<>();
-
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant date;
 
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name="product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    Set<Category> categories = new HashSet<>();
 
     public Product() {
     }
@@ -41,16 +39,8 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public Product(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -85,14 +75,6 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public Instant getDate() {
-        return date;
-    }
-
-    public void setDate(Instant date) {
-        this.date = date;
-    }
-
     public Set<Category> getCategories() {
         return categories;
     }
@@ -101,16 +83,13 @@ public class Product implements Serializable {
         this.categories = categories;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product category = (Product) o;
-        return Objects.equals(id, category.id);
+    public Instant getDate() {
+        return date;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setDate(Instant date) {
+        this.date = date;
     }
+
+
 }

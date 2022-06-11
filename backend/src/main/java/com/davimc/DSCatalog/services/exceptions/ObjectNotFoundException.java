@@ -8,7 +8,7 @@ public class ObjectNotFoundException extends RuntimeException{
         super(message);
     }
 
-    public ObjectNotFoundException(Long id, Class<Category> categoryClass) {
+    public ObjectNotFoundException(Long id, Class<?> categoryClass) {
         super("Object not found. id: " + id + " to: " + categoryClass.getSimpleName());
     }
 }
