@@ -31,12 +31,12 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(Long id, String name, String description, Double price, String imgUrl) {
-        this.id = id;
+    public Product(String name, String description, Double price, String imgUrl, Instant date) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+        this.date = date;
     }
 
     public Long getId() {
