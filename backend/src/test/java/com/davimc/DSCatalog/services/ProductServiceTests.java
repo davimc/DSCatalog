@@ -2,10 +2,12 @@ package com.davimc.DSCatalog.services;
 
 import com.davimc.DSCatalog.DTO.ProductDTO;
 import com.davimc.DSCatalog.entities.Product;
+import com.davimc.DSCatalog.repositories.CategoryRepository;
 import com.davimc.DSCatalog.repositories.ProductRepository;
 import com.davimc.DSCatalog.services.exceptions.DatabaseException;
 import com.davimc.DSCatalog.services.exceptions.ObjectNotFoundException;
 import com.davimc.DSCatalog.tests.Factory;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,10 +30,15 @@ public class ProductServiceTests {
     @Mock
     private ProductRepository repository;
 
+    @Mock
+    private CategoryRepository categoryRepository;
+
+
     private long existingId;
     private long nonExistingId;
     private long dependentId;
     private Product product;
+    private ProductDTO productDTO;
     private PageImpl page;
 
     @BeforeEach
@@ -41,17 +48,51 @@ public class ProductServiceTests {
         dependentId = 3L;
         product = Factory.createProduct();
         page = new PageImpl<>(List.of(product));
+        productDTO = Factory.createProductDTO();
 
         Mockito.when(repository.findAll((Pageable) ArgumentMatchers.any())).thenReturn(page);
         Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(product);
         Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(product));
         Mockito.when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
 
+        Mockito.when(repository.getReferenceById(existingId)).thenReturn(product);
+        Mockito.when(repository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
+
         Mockito.doNothing().when(repository).deleteById(existingId);
         Mockito.doThrow(ObjectNotFoundException.class).when(repository).deleteById(nonExistingId);
         Mockito.doThrow(DatabaseException.class).when(repository).deleteById(dependentId);
+
     }
 
+    @Test
+    public void findByIdShouldReturnProductDTOWhenIdExists() {
+        ProductDTO result = service.findById(existingId);
+
+        Mockito.verify(repository, Mockito.times(1)).findById(existingId);
+        Assertions.assertNotNull(result);
+    }
+    @Test
+    public void findByIdShouldThrowObjectNotFoundExceptionWhenIdDoesNotExists() {
+        Assertions.assertThrows(ObjectNotFoundException.class, () -> {
+            service.findById(nonExistingId);
+
+        });
+    }
+
+    @Test
+    public void updateShouldReturnProductDTOWhenIdExists() {
+
+        ProductDTO result = service.update(existingId, productDTO);
+
+        Assertions.assertNotNull(result);
+    }
+    @Test
+    public void updateShouldThrowObjectNotFoundExceptionWhenIdDoesNotExists() {
+        Assertions.assertThrows(ObjectNotFoundException.class, () -> {
+            service.update(nonExistingId, productDTO);
+
+        });
+    }
     @Test
     public void findAllPagedShouldReturnPage() {
         Pageable pageable = PageRequest.of(0,10);
@@ -61,20 +102,7 @@ public class ProductServiceTests {
         Mockito.verify(repository, Mockito.times(1)).findAll(pageable);
     }
 
-    @Test
-    public void findByIdShouldReturnProductDTOWhenExistId() {
-        ProductDTO pdct = service.findById(existingId);
 
-        Mockito.verify(repository, Mockito.times(1)).findById(existingId);
-        Assertions.assertTrue(pdct!=null);
-    }
-    @Test
-    public void findByIdShouldThrowObjectNotFoundExceptionWhenDoesNotExistsId() {
-        Assertions.assertThrows(ObjectNotFoundException.class, () -> {
-            service.findById(nonExistingId);
-
-        });
-    }
     @Test
     public void deleteByIdShouldThrowDatabaseExceptionWhenDependentId() {
         Assertions.assertThrows(DatabaseException.class, () -> {
