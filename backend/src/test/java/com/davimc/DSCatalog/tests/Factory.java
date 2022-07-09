@@ -17,6 +17,7 @@ public class Factory {
     public static ProductDTO createProductDTO() {
         Product obj = createProduct();
         ProductDTO dto = new ProductDTO(obj,obj.getCategories());
+        dto.setId(1L);
 
         return dto;
     }
