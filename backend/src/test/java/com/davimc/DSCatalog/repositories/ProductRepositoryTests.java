@@ -1,17 +1,12 @@
 package com.davimc.DSCatalog.repositories;
 
 import com.davimc.DSCatalog.entities.Product;
-import com.davimc.DSCatalog.services.exceptions.DatabaseException;
-import com.davimc.DSCatalog.services.exceptions.ObjectNotFoundException;
 import com.davimc.DSCatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.Optional;
