@@ -23,6 +23,6 @@ public class Factory {
     }
 
     public static Category createCategory() {
-        return new Category("Eletronics");
+        return new Category(1L,"Eletronics");
     }
 }
