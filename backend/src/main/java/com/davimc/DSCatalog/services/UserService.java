@@ -1,8 +1,11 @@
 package com.davimc.DSCatalog.services;
 
+import com.davimc.DSCatalog.DTO.RoleDTO;
 import com.davimc.DSCatalog.DTO.UserDTO;
 import com.davimc.DSCatalog.DTO.UserInsertDTO;
+import com.davimc.DSCatalog.entities.Role;
 import com.davimc.DSCatalog.entities.User;
+import com.davimc.DSCatalog.repositories.RoleRepository;
 import com.davimc.DSCatalog.repositories.UserRepository;
 import com.davimc.DSCatalog.services.exceptions.DatabaseException;
 import com.davimc.DSCatalog.services.exceptions.ObjectNotFoundException;
@@ -13,6 +16,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +28,11 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional(readOnly = true)
     public List<UserDTO> findAll() {
@@ -47,7 +56,7 @@ public class UserService {
     @Transactional
     public UserDTO insert(UserInsertDTO dto) {
         User obj = fromDTO(dto);
-        obj.setPassword(dto.getPassword());
+        obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         obj = repository.save(obj);
 
         return new UserDTO(obj);
@@ -73,6 +82,12 @@ public class UserService {
         obj.setFirstName(dto.getFirstName());
         obj.setLastName(dto.getLastName());
         obj.setEmail(dto.getEmail());
+
+        obj.getRoles().clear();
+        for(RoleDTO roleDTO: dto.getRoles()) {
+            Role role = roleRepository.getReferenceById(roleDTO.getId());
+            obj.getRoles().add(role);
+        }
 
         return obj;
     }
