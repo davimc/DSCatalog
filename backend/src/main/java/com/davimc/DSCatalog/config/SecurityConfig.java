@@ -23,6 +23,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = { "/**" };
 
+
+    /*
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/**");
+     }
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
