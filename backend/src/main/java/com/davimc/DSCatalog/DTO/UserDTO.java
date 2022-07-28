@@ -6,6 +6,7 @@ import com.davimc.DSCatalog.entities.User;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -31,6 +32,7 @@ public class UserDTO implements Serializable {
         firstName = entity.getFirstName();
         lastName = entity.getLastName();
         email = entity.getEmail();
+        roles = entity.getRoles().stream().map(RoleDTO::new).collect(Collectors.toSet());
     }
 
     public Long getId() {
