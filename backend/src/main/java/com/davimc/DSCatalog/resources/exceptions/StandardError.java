@@ -1,8 +1,10 @@
 package com.davimc.DSCatalog.resources.exceptions;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public class StandardError {
+public class StandardError implements Serializable {
+    private static final Long serialVersionUID = 1L;
 
     private Instant timeStamp;
     private Integer status;
