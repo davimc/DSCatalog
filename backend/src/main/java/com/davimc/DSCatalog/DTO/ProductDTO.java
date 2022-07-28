@@ -2,11 +2,13 @@ package com.davimc.DSCatalog.DTO;
 
 import com.davimc.DSCatalog.entities.Category;
 import com.davimc.DSCatalog.entities.Product;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,8 +16,11 @@ public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @Size(min=5, max=60, message="Tamanho do campo não aceito")
+    @NotBlank(message = "Campo requerido")
     private String name;
     private String description;
+    @Positive(message = "O Produto precisa ter um preço válido")
     private Double price;
     private String imgUrl;
     private Instant date;
