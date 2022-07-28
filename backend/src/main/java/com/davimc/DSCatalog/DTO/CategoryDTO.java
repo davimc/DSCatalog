@@ -1,6 +1,8 @@
 package com.davimc.DSCatalog.DTO;
 
 import com.davimc.DSCatalog.entities.Category;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 
@@ -8,6 +10,8 @@ public class CategoryDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @Size(min=3, max=60, message="Deve ter entre 5 e 60 caracteres")
+    @NotBlank(message="Campo requerido")
     private String name;
 
     public CategoryDTO() {

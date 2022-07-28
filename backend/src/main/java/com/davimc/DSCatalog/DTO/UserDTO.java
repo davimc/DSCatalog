@@ -2,6 +2,9 @@ package com.davimc.DSCatalog.DTO;
 
 import com.davimc.DSCatalog.entities.Role;
 import com.davimc.DSCatalog.entities.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,8 +15,13 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @Size(min=3, max=60, message="Deve ter entre 5 e 60 caracteres")
+    @NotBlank(message="Campo requerido")
     private String firstName;
+    @Size(min=3, max=60, message="Deve ter entre 5 e 60 caracteres")
+    @NotBlank(message="Campo requerido")
     private String lastName;
+    @Email(message = "Favor entrar um e-mail válido")
     private String email;
     private Set<RoleDTO> roles = new HashSet<>();
 
