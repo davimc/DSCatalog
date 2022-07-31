@@ -2,12 +2,15 @@ package com.davimc.DSCatalog.DTO;
 
 import com.davimc.DSCatalog.entities.Role;
 import com.davimc.DSCatalog.entities.User;
+import com.davimc.DSCatalog.services.validation.UserInsertValid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+@UserInsertValid
 
 public class UserInsertDTO extends UserDTO {
     private static final long serialVersionUID = 1L;

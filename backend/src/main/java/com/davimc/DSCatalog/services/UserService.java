@@ -1,8 +1,7 @@
 package com.davimc.DSCatalog.services;
 
-import com.davimc.DSCatalog.DTO.RoleDTO;
-import com.davimc.DSCatalog.DTO.UserDTO;
-import com.davimc.DSCatalog.DTO.UserInsertDTO;
+import com.davimc.DSCatalog.DTO.*;
+import com.davimc.DSCatalog.entities.Product;
 import com.davimc.DSCatalog.entities.Role;
 import com.davimc.DSCatalog.entities.User;
 import com.davimc.DSCatalog.repositories.RoleRepository;
@@ -55,7 +54,8 @@ public class UserService {
 
     @Transactional
     public UserDTO insert(UserInsertDTO dto) {
-        User obj = fromDTO(dto);
+        User obj = new User();
+        copyDtoToEntity(dto,obj);
         obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         obj = repository.save(obj);
 
@@ -63,8 +63,15 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
-        throw new NotYetImplementedException("Ainda não implementado");
+    public UserDTO update(Long id, UserUpdateDTO dto) {
+        try {
+            User obj = repository.getReferenceById(id);
+            copyDtoToEntity(dto,obj);
+            obj = repository.save(obj);
+            return new UserDTO(obj);
+        } catch (EntityNotFoundException e) {
+            throw new ObjectNotFoundException(id, User.class);
+        }
     }
 
     public void delete(Long id) {
@@ -76,20 +83,17 @@ public class UserService {
             throw new DatabaseException("Integrity violation");
         }
     }
-    
-    private User fromDTO(UserDTO dto) {
-        User obj = new User();
+
+
+    private void copyDtoToEntity(UserDTO dto, User obj) {
         obj.setFirstName(dto.getFirstName());
         obj.setLastName(dto.getLastName());
         obj.setEmail(dto.getEmail());
 
         obj.getRoles().clear();
-        for(RoleDTO roleDTO: dto.getRoles()) {
+        for (RoleDTO roleDTO : dto.getRoles()) {
             Role role = roleRepository.getReferenceById(roleDTO.getId());
             obj.getRoles().add(role);
         }
-
-        return obj;
     }
-
 }
