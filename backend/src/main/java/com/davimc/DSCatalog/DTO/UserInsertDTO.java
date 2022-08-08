@@ -3,8 +3,7 @@ package com.davimc.DSCatalog.DTO;
 import com.davimc.DSCatalog.entities.Role;
 import com.davimc.DSCatalog.entities.User;
 import com.davimc.DSCatalog.services.validation.UserInsertValid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.HashSet;

@@ -4,7 +4,7 @@ import com.davimc.DSCatalog.DTO.UserDTO;
 import com.davimc.DSCatalog.DTO.UserInsertDTO;
 import com.davimc.DSCatalog.DTO.UserUpdateDTO;
 import com.davimc.DSCatalog.services.UserService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

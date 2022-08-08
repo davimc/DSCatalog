@@ -6,8 +6,8 @@ import java.util.List;
 import com.davimc.DSCatalog.DTO.UserInsertDTO;
 import com.davimc.DSCatalog.repositories.UserRepository;
 import com.davimc.DSCatalog.resources.exceptions.FieldMessage;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {

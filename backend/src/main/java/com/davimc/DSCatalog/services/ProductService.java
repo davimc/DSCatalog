@@ -8,7 +8,7 @@ import com.davimc.DSCatalog.repositories.CategoryRepository;
 import com.davimc.DSCatalog.repositories.ProductRepository;
 import com.davimc.DSCatalog.services.exceptions.DatabaseException;
 import com.davimc.DSCatalog.services.exceptions.ObjectNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -62,7 +62,7 @@ public class ProductService {
     @Transactional
     public ProductDTO update(Long id, ProductDTO dto) {
         try {
-            Product obj = repository.getReferenceById(id);
+            Product obj = repository.getOne(id);
             copyDtoToEntity(dto,obj);
             obj = repository.save(obj);
             return new ProductDTO(obj);
@@ -90,7 +90,7 @@ public class ProductService {
 
         obj.getCategories().clear();
         for(CategoryDTO catDTO: dto.getCategories()) {
-            Category cat = categoryRepository.getReferenceById(catDTO.getId());
+            Category cat = categoryRepository.getOne(catDTO.getId());
             obj.getCategories().add(cat);
         }
     }

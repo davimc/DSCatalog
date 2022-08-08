@@ -1,6 +1,6 @@
 package com.davimc.DSCatalog.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;

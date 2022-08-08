@@ -5,9 +5,9 @@ import com.davimc.DSCatalog.DTO.UserUpdateDTO;
 import com.davimc.DSCatalog.entities.User;
 import com.davimc.DSCatalog.repositories.UserRepository;
 import com.davimc.DSCatalog.resources.exceptions.FieldMessage;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 

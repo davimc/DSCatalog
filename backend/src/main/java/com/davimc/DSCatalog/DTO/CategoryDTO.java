@@ -1,9 +1,9 @@
 package com.davimc.DSCatalog.DTO;
 
 import com.davimc.DSCatalog.entities.Category;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class CategoryDTO implements Serializable {

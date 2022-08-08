@@ -1,6 +1,8 @@
 package com.davimc.DSCatalog.entities;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -17,6 +19,7 @@ public class Role implements Serializable {
     private Long id;
     private String authority;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet();
 

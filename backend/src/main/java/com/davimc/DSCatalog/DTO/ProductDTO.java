@@ -2,10 +2,7 @@ package com.davimc.DSCatalog.DTO;
 
 import com.davimc.DSCatalog.entities.Category;
 import com.davimc.DSCatalog.entities.Product;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;

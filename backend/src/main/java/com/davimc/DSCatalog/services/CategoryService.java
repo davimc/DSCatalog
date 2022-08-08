@@ -5,7 +5,7 @@ import com.davimc.DSCatalog.entities.Category;
 import com.davimc.DSCatalog.repositories.CategoryRepository;
 import com.davimc.DSCatalog.services.exceptions.DatabaseException;
 import com.davimc.DSCatalog.services.exceptions.ObjectNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -55,7 +55,7 @@ public class CategoryService {
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO dto) {
         try {
-            Category obj = repository.getReferenceById(id);
+            Category obj = repository.getOne(id);
             obj.setName(dto.getName());
             obj = repository.save(obj);
             return new CategoryDTO(obj);
