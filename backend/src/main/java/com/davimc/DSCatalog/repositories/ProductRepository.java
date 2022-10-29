@@ -22,4 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "(COALESCE(:categories) IS NULL OR cats IN :categories) AND " +
             "(LOWER(obj.name) LIKE LOWER(CONCAT('%',:name, '%')) )")
     public Page<Product> find(List<Category> categories, String name, Pageable pageable);
+
+    @Query("SELECT obj FROM Product obj JOIN FETCH obj.categories IN :products")
+    public List<Product> findProductsWithCategories(List<Product> products);
 }

@@ -40,6 +40,7 @@ public class ProductService {
     public Page<ProductDTO> findAllPaged(Long categoryId, String name, PageRequest pageRequest) {
         List<Category> categories = (categoryId == 0) ? null : Arrays.asList(categoryRepository.getOne(categoryId));
         Page<Product> list = repository.find(categories, name, pageRequest);
+        repository.findProductsWithCategories(list.getContent());
         return list.map(ProductDTO::new);
     }
 
