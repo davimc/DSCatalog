@@ -20,14 +20,19 @@ public class ProductResource {
 
     @Autowired
     private ProductService service;
-    /*@GetMapping
-    public ResponseEntity<List<ProductDTO>> findAll() {
-        return ResponseEntity.ok().body(service.findAll());
-    }*/
-
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAllPaged(Pageable pageable) {
-        return ResponseEntity.ok().body(service.findAllPaged(pageable));
+    public ResponseEntity<Page<ProductDTO>> findAllPaged(
+            @RequestParam(value = "categoryId", defaultValue = "0") Long CategoryId,
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
+
+    ) {
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage,
+                Sort.Direction.valueOf(direction), orderBy);
+        return ResponseEntity.ok().body(service.findAllPaged(CategoryId, name, pageRequest));
     }
     @GetMapping(value="/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
