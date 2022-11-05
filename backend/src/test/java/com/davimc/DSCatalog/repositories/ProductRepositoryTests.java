@@ -27,8 +27,6 @@ public class ProductRepositoryTests {
         nonExistingId = 1000L;
         dependentId = 4L;
         countTotalIds = repository.count();
-
-
     }
 
 

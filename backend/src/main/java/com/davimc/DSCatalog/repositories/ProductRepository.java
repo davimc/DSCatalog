@@ -23,6 +23,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "(LOWER(obj.name) LIKE LOWER(CONCAT('%',:name, '%')) )")
     public Page<Product> find(List<Category> categories, String name, Pageable pageable);
 
-    @Query("SELECT obj FROM Product obj JOIN FETCH obj.categories IN :products")
+    @Query("SELECT obj FROM Product obj JOIN FETCH obj.categories WHERE obj IN :products")
     public List<Product> findProductsWithCategories(List<Product> products);
 }

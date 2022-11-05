@@ -3,11 +3,9 @@ package com.davimc.DSCatalog.services;
 import com.davimc.DSCatalog.DTO.CategoryDTO;
 import com.davimc.DSCatalog.entities.Category;
 import com.davimc.DSCatalog.repositories.CategoryRepository;
-import com.davimc.DSCatalog.repositories.CategoryRepository;
 import com.davimc.DSCatalog.services.exceptions.DatabaseException;
 import com.davimc.DSCatalog.services.exceptions.ObjectNotFoundException;
 import com.davimc.DSCatalog.tests.Factory;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,8 +56,8 @@ public class CategoryServiceTests {
         Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(product));
         Mockito.when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
 
-        Mockito.when(repository.getReferenceById(existingId)).thenReturn(product);
-        Mockito.when(repository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
+        Mockito.when(repository.getOne(existingId)).thenReturn(product);
+        Mockito.when(repository.getOne(nonExistingId)).thenThrow(ObjectNotFoundException.class);
 
         Mockito.doNothing().when(repository).deleteById(existingId);
         Mockito.doThrow(ObjectNotFoundException.class).when(repository).deleteById(nonExistingId);
